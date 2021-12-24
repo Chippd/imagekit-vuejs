@@ -25,7 +25,8 @@ export default {
     transformationPosition: { type: String, required: false },
     queryParameters: { type: Object, required: false },
     lqip: { type: Object, default: null, required: false },
-    loading: {type: String, default:""}
+    loading: {type: String, default:""},
+    onLoaded: {type: Function, required: false}
   },
   methods: {
     getMergedOptions: function() {
@@ -44,6 +45,10 @@ export default {
       var img = new Image();
       img.onload = () => {
         this.originalSrcLoaded = true;
+        if(typeof this.onLoaded === "function")
+        {
+          this.onLoaded()
+        }
       }
       img.src = this.imageAttrs.src;
     },
